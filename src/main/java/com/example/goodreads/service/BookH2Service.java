@@ -7,7 +7,7 @@ import org.springframework.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.;
+import java.util.*;
 
 import com.example.goodreads.model.Book;
 import com.example.goodreads.model.BookRowMapper;
@@ -23,7 +23,7 @@ public class BookH2Service implements BookRepository{
         ArrayList<Book> books = new ArrayList<>(bookList);
         return books;
     }
-
+    
 
     @Override
     public Book getBookById(int bookId){
@@ -31,6 +31,7 @@ public class BookH2Service implements BookRepository{
         Book book = db.queryForObject(sql, new BookRowMapper(), bookId);
         return book;
     }
+    
     
     @Override
     public Book addBook(Book book){
@@ -41,12 +42,12 @@ public class BookH2Service implements BookRepository{
     @Override
     public Book updateBook(int bookId, Book book){
         if(book.getImageUrl()!=null){
-            db.update("update book set imageUrl = ? where id =?", book.getImageUrl(),id);
+            db.update("update book set imageUrl = ? where id =?", book.getImageUrl(),bookId);
             }
         if(book.getName()!=null){
-            db.update("update book set name = ? where id =?", book.getName(),id);
+            db.update("update book set name = ? where id =?", book.getName(),bookId);
             }
-        return getBookById(id);
+        return getBookById(bookId);
     }
     
     @Override
